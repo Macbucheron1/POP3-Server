@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15) # (REQUIS)
 
 # Définition du projet (REQUIS)
-project(serveur-echo 
+project(pop3-server 
     VERSION 1.0.0
     DESCRIPTION "Implémentation de POP3 en C++"
     LANGUAGES CXX
