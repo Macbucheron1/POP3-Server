@@ -2,8 +2,8 @@
 #define FACTORY_H
 
 #include "Request.h"
-#include <sstream>
 #include <string>
+#include <memory>
 
 using namespace std;
 
