@@ -18,6 +18,13 @@
           pkg-config
           asio
         ];
+
+        shellHook = ''
+          export PS1="\n\[\033[1;35m\][nix-shell TP2-CPP]\[\033[0m\] "
+          if [ ! -d build ]; then
+            cmake -S . -B build
+          fi
+        '';
       };
     };
 }
