@@ -6,6 +6,9 @@ project(serveur-echo
     DESCRIPTION "Serveur echo en C++ avec ASIO"
     LANGUAGES CXX)
 
+# Export compile commands pour clangd
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 # Configuration C++
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
