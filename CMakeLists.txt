@@ -20,13 +20,17 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
 # Définition des sources (REQUIS)
 set(SOURCES
-    main.cpp
-    Server.cpp
-    Response.cpp
+    src/main.cpp
+    src/Server.cpp
+    src/Request.cpp
+    src/Response.cpp
 )
 
 # Création de l'exécutable (REQUIS)
 add_executable(${PROJECT_NAME} ${SOURCES})
+
+# Configuration des includes
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Configuration pour les threads (REQUIS pour asio)
 find_package(Threads REQUIRED)
