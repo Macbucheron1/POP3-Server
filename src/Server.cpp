@@ -3,6 +3,7 @@
 #include "asio.hpp"
 
 #include "../include/Server.h"
+#include "../include/Request.h"
 
 namespace ip = asio::ip;
 
@@ -46,12 +47,15 @@ void Server::start()
 
 		// On lit une ligne par une ligne tant qu'on peut.
 		while (m_stream && m_currentState != State::QUITTING) {
-			std::string line;
-			std::getline(m_stream, line);
-			// On a une seule façon de traiter les requêtes ici.
-			// La méthode process est susceptible de déclencher une
-			// transition vers un autre état du protocole.
-			m_stream << process(line) << std::endl;
+			// Utilisation de la nouvelle classe Request pour lire et parser la requête
+			Request request(m_stream);
+			
+			// Vérification que la lecture s'est bien passée
+			if (m_stream) {
+				// On traite la requête avec l'ancien système pour le moment
+				// (plus tard on utilisera request.dispatch(*this))
+				m_stream << process(request.getFullLine()) << std::endl;
+			}
 		}
 
 		// Si l'état est QUITTING, cela signifie que l'on a quitté la
