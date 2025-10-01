@@ -1,5 +1,5 @@
 #include "../include/RequestFactory.h"
-//#include "RequestQuit.h"
+#include "../include/RequestQuit.h"
 
 unique_ptr<Request> RequestFactory::parse(const string& line) {
 
