@@ -45,3 +45,6 @@ result-*
 # Système
 .DS_Store
 Thumbs.db
+
+# clangd
+.clangd
