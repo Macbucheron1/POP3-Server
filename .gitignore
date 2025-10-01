@@ -1,0 +1,47 @@
+# Dossiers de build
+build/
+cmake-build-*/
+
+# Exécutables
+serveur-echo
+serveur-echo-nixpkgs
+check_version
+
+# Fichiers objets et binaires
+*.o
+*.a
+*.so
+*.exe
+
+# Cache CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.cmake
+
+# Fichiers de compilation
+compile_commands.json
+
+# Fichiers temporaires
+*.tmp
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Dossiers IDE
+.vscode/
+.idea/
+*.vcxproj*
+*.sln
+
+# Nix
+result
+result-*
+
+# Système
+.DS_Store
+Thumbs.db
