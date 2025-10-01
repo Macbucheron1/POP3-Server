@@ -29,10 +29,12 @@ pkg_check_modules(ASIO REQUIRED asio)
 set(SOURCES
     main.cpp
     Server.cpp
+    Response.cpp
 )
 
 set(HEADERS
     Server.h
+    Response.h
 )
 
 # Création de l'exécutable
