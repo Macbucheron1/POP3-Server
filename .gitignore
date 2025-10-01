@@ -1,6 +1,7 @@
 # Dossiers de build
 build/
 cmake-build-*/
+bin/
 
 # Exécutables
 serveur-echo

@@ -4,8 +4,6 @@
 
 #include "Server.h"
 
-namespace centralesupelec::tp2
-{
 namespace ip = asio::ip;
 
 
@@ -88,6 +86,4 @@ std::string Server::process(const std::string& req)
 	} else {
 		return req;
 	}
-}
-
 }

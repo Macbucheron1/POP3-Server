@@ -1,71 +1,38 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.15) # (REQUIS)
 
-# Définition du projet
+# Définition du projet (REQUIS)
 project(serveur-echo 
     VERSION 1.0.0
-    DESCRIPTION "Serveur echo en C++ avec ASIO"
-    LANGUAGES CXX)
+    DESCRIPTION "Implémentation de POP3 en C++"
+    LANGUAGES CXX
+)
 
-# Export compile commands pour clangd
+# Export compile commands pour clangd  (OPTIONNEL pour intellisense)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Configuration C++
+# Configuration C++ (REQUIS)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Options de compilation pour le debug et la performance
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 -Wall -Wextra")
-else()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2 -DNDEBUG")
-endif()
+# Définir le répertoire de sortie des exécutables (OPTIONNEL va par défaut dans build/)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
-# Recherche du package ASIO
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(ASIO REQUIRED asio)
-
-# Définition des sources
+# Définition des sources (REQUIS)
 set(SOURCES
     main.cpp
     Server.cpp
     Response.cpp
 )
 
-set(HEADERS
-    Server.h
-    Response.h
-)
-
-# Création de l'exécutable
+# Création de l'exécutable (REQUIS)
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-# Configuration des includes et libraries pour ASIO
-target_include_directories(${PROJECT_NAME} PRIVATE ${ASIO_INCLUDE_DIRS})
-target_link_libraries(${PROJECT_NAME} PRIVATE ${ASIO_LIBRARIES})
-target_compile_definitions(${PROJECT_NAME} PRIVATE ${ASIO_CFLAGS_OTHER})
-
-# Si ASIO n'est pas trouvé via pkg-config, utiliser les headers locaux
-if(NOT ASIO_FOUND)
-    message(STATUS "ASIO non trouvé via pkg-config, utilisation des headers locaux")
-    target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-endif()
-
-# Configuration pour les threads (requis par ASIO)
+# Configuration pour les threads (REQUIS pour asio)
 find_package(Threads REQUIRED)
 target_link_libraries(${PROJECT_NAME} PRIVATE Threads::Threads)
 
-# Installation
-install(TARGETS ${PROJECT_NAME}
-    RUNTIME DESTINATION bin
-)
-
-# Option pour créer un package
-set(CPACK_PROJECT_NAME ${PROJECT_NAME})
-set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
-include(CPack)
-
-# Affichage des informations de compilation
+# Affichage des informations de compilation (OPTIONNEL)
 message(STATUS "Projet: ${PROJECT_NAME}")
 message(STATUS "Version: ${PROJECT_VERSION}")
 message(STATUS "Compilateur: ${CMAKE_CXX_COMPILER}")

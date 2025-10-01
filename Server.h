@@ -5,8 +5,6 @@
 
 #include "asio.hpp"
 
-namespace centralesupelec::tp2
-{
 class Request;
 
 namespace ip = asio::ip;
@@ -50,6 +48,5 @@ public:
 
 	void start();
 };
-}
 
 #endif // !defined(SERVER_H)

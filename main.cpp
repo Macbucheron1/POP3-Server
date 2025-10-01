@@ -5,7 +5,6 @@
 
 int main()
 {
-    using namespace centralesupelec::tp2;
 
     // On crée un contexte par défaut que l'on passe au Serveur. Lorsque l'on
     // veut faire des opérations asynchrones (pour gérer des timeouts, ou faire
