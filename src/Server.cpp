@@ -3,7 +3,8 @@
 #include "asio.hpp"
 
 #include "../include/Server.h"
-#include "../include/Request.h"
+#include "../include/RequestFactory.h"
+#include "../include/Response.h"
 
 namespace ip = asio::ip;
 
@@ -19,7 +20,8 @@ Server::Server(asio::io_context& ioContext) :
 
 void Server::start()
 {
-	// On utilise une boucle infinie, chaque tour de boucle est l'interaction
+	// On utilise une boucle infinie, chaque tour de boucle est l'
+	// interaction
 	// complète avec un client jusqu'à sa déconnexion.
 	// Le serveur quitte lorsqu'il crashe suite à une exception...
 	for (;;)
@@ -40,22 +42,28 @@ void Server::start()
 
 		std::cerr << "New client connected!" << std::endl;
 
-		m_stream << "Ready to repeat everything you say (one line at a time)! Type STOP to exit." << std::endl;
+		m_stream << "+OK POP3 server ready" << std::endl;
 
 		// On passe à l'état suivant de la communication.
 		m_currentState = State::TALKING_TO_USER;
 
 		// On lit une ligne par une ligne tant qu'on peut.
 		while (m_stream && m_currentState != State::QUITTING) {
-			// Utilisation de la nouvelle classe Request pour lire et parser la requête
-			Request request(m_stream);
+			std::string line;
+			std::getline(m_stream, line);
 			
-			// Vérification que la lecture s'est bien passée
-			if (m_stream) {
-				// On traite la requête avec l'ancien système pour le moment
-				// (plus tard on utilisera request.dispatch(*this))
-				m_stream << process(request.getFullLine()) << std::endl;
+			auto request = RequestFactory::parse(line); 
+
+			// TODO : utiliser le pattern visitor pour déléguer
+			if (request->getCommand() == "QUIT") {
+				m_stream << Response(true, "Au revoir");
+				m_currentState = State::QUITTING;
+			} else if (request->getCommand() == "UNKNOWN") {
+				m_stream << Response(false, "Commande inconnue");
+			} else {
+				m_stream << Response(true, "Commande " + request->getCommand() + " reçue");
 			}
+
 		}
 
 		// Si l'état est QUITTING, cela signifie que l'on a quitté la
@@ -78,16 +86,5 @@ void Server::start()
 		if (m_stream) {
 			m_stream.close();
 		}
-	}
-}
-
-// Fonction de traitement de n'importe quel message du client, très basique.
-std::string Server::process(const std::string& req)
-{
-	if (req.substr(0,4) == "STOP") {
-		m_currentState = State::QUITTING;
-		return "bye!";
-	} else {
-		return req;
 	}
 }

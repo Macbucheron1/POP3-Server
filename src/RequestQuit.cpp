@@ -2,6 +2,6 @@
 
 RequestQuit::RequestQuit() : Request("QUIT") {}
 
-void RequestQuit::accept(Server& server) {
-    // TODO: à implémenter
-}
+void RequestQuit::accept(Server& server){
+    // TODO: Implémenter
+};

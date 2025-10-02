@@ -24,8 +24,10 @@ set(SOURCES
     src/Server.cpp
     src/Request.cpp
     src/Response.cpp
-    src/RequestQuit.cpp
     src/RequestFactory.cpp
+    src/RequestQuit.cpp
+    src/Message.cpp
+    src/RequestUnknown.cpp
 )
 
 # Création de l'exécutable (REQUIS)
