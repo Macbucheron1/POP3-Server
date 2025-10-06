@@ -1,21 +1,73 @@
 #include "../include/RequestFactory.h"
 #include "../include/RequestQuit.h"
 #include "../include/RequestUnknown.h"
+#include "../include/RequestUser.h"
+#include "../include/RequestPass.h"
+#include "../include/RequestStat.h"
+#include "../include/RequestList.h"
+#include "../include/RequestRetr.h"
+#include "../include/RequestDele.h"
+#include "../include/RequestNoop.h"
+#include "../include/RequestRset.h"
+#include <algorithm>
+#include <cctype>
+#include <sstream>
 
 unique_ptr<Request> RequestFactory::parse(istream& stream) {
-    // Créer une RequestUnknown temporaire pour lire et parser la ligne
-    auto tempRequest = make_unique<RequestUnknown>(stream);
+    // Lire une ligne depuis le stream
+    string line;
+    if (!getline(stream, line)) {
+        return nullptr; // Échec de lecture
+    }
     
-    // Si la lecture a échoué, retourner nullptr
-    if (tempRequest->getCommand().empty()) {
+    // Parser la ligne pour extraire la commande
+    string cleanLine = line;
+    cleanLine.erase(std::remove(cleanLine.begin(), cleanLine.end(), '\r'), cleanLine.end());
+    
+    if (cleanLine.empty()) {
         return nullptr;
     }
     
-    // Déterminer le type de requête basé sur la commande parsée
-    if (tempRequest->getCommand() == "QUIT") {
-        return make_unique<RequestQuit>();
+    istringstream iss(cleanLine);
+    string command;
+    iss >> command;
+    
+    if (command.empty()) {
+        return nullptr;
     }
     
-    // Retourner la RequestUnknown qui a déjà tout parsé
-    return tempRequest;
+    // Convertir la commande en majuscules pour comparaison case-insensitive
+    std::transform(command.begin(), command.end(), command.begin(), ::toupper);
+    
+    // Créer la requête appropriée basée sur la commande
+    if (command == "QUIT") {
+        return make_unique<RequestQuit>();
+    }
+    else if (command == "USER") {
+        return make_unique<RequestUser>(line, true);
+    }
+    else if (command == "PASS") {
+        return make_unique<RequestPass>(line, true);
+    }
+    else if (command == "STAT") {
+        return make_unique<RequestStat>();
+    }
+    else if (command == "LIST") {
+        return make_unique<RequestList>(line, true);
+    }
+    else if (command == "RETR") {
+        return make_unique<RequestRetr>(line, true);
+    }
+    else if (command == "DELE") {
+        return make_unique<RequestDele>(line, true);
+    }
+    else if (command == "NOOP") {
+        return make_unique<RequestNoop>();
+    }
+    else if (command == "RSET") {
+        return make_unique<RequestRset>();
+    }
+    
+    // Commande inconnue
+    return make_unique<RequestUnknown>(line, true);
 }

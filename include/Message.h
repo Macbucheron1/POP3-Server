@@ -10,6 +10,7 @@ class Message {
 public:
     Message(const string& c);
     string getContent() const;
+    size_t getSize() const; // Taille en octets (incluant CRLF)
 };
 
 #endif

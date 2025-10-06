@@ -1,5 +1,42 @@
 # TP2_CPP_CS_3A
 
+## Use the project 
+
+### Quick start - CLI
+
+1. Launch the binary (make sur it is executable)
+```bash
+./pop3-server
+```
+2. Connect to the server 
+```bash
+nc localhost 9999
+```
+3. Use normally the server !
+
+![cli](./img/cli.png)
+
+## Mail client - Thunderbird
+
+0. You first need to install Thunderbird on your machine
+
+1. When launching Thunderbird you need to click on the top right corner on `Account Settings`
+![beginning](./img/beginning.png)
+
+2. Here you are going to setup a new account `+ New Account` then `Mail Account...` 
+![new_mail_account](./img/new_mail_account.png)
+
+3. New you will need to setup the email address copy the same value as the screenshot.
+![setup_account1](./img/setup_account1.png)
+![setup_account2](./img/setup_account2.png)
+![setup_account3](./img/setup_account3.png)
+
+4. You now should have your account setup when you click back on Local Folders. Try to click on `Get Messages` to fetch messages from the server. 
+![fetching](./img/fetching.png)
+
+5. You should now receive the messages loaded in the server !
+![result](./img/result.png)
+
 ## Development Setup
 
 ### Option 1: Using Nix
