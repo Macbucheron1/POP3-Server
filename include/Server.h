@@ -6,6 +6,8 @@
 #include "asio.hpp"
 
 class Request;
+class RequestQuit;
+class RequestUnknown;
 
 namespace ip = asio::ip;
 namespace chrono = std::chrono;
@@ -47,6 +49,10 @@ public:
 	explicit Server(asio::io_context& io);
 
 	void start();
+
+	// Méthodes visitor pour le pattern Visitor
+	void visit(RequestQuit& request);
+	void visit(RequestUnknown& request);
 };
 
 #endif // !defined(SERVER_H)

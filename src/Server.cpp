@@ -4,6 +4,8 @@
 
 #include "../include/Server.h"
 #include "../include/RequestFactory.h"
+#include "../include/RequestQuit.h"
+#include "../include/RequestUnknown.h"
 #include "../include/Response.h"
 
 namespace ip = asio::ip;
@@ -56,15 +58,8 @@ void Server::start()
 				break;
 			}
 
-			// TODO : utiliser le pattern visitor pour déléguer
-			if (request->getCommand() == "QUIT") {
-				m_stream << Response(true, "Au revoir");
-				m_currentState = State::QUITTING;
-			} else if (request->getCommand() == "UNKNOWN") {
-				m_stream << Response(false, "Commande inconnue");
-			} else {
-				m_stream << Response(true, "Commande " + request->getCommand() + " reçue");
-			}
+			// Pattern Visitor : double dispatch via accept()
+			request->accept(*this);
 
 		}
 
@@ -89,4 +84,16 @@ void Server::start()
 			m_stream.close();
 		}
 	}
+}
+
+// Implémentation des méthodes visitor
+void Server::visit(RequestQuit& request)
+{
+	m_stream << Response(true, "Au revoir");
+	m_currentState = State::QUITTING;
+}
+
+void Server::visit(RequestUnknown& request)
+{
+	m_stream << Response(false, "Commande inconnue");
 }

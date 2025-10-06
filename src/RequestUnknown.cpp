@@ -1,4 +1,5 @@
 #include "../include/RequestUnknown.h"
+#include "../include/Server.h"
 
 RequestUnknown::RequestUnknown(const string& cmd)
     : Request("UNKNOWN"), m_rawCommand(cmd) {}
@@ -20,5 +21,5 @@ string RequestUnknown::getRawCommand() const {
 }
 
 void RequestUnknown::accept(Server& server){
-    // TODO: Implémenter
+    server.visit(*this);
 }
