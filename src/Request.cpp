@@ -1,5 +1,6 @@
 #include "../include/Request.h"
 #include <sstream>
+#include <algorithm>
 
 Request::Request(const string& cmd) : command(cmd) {};
 
@@ -19,7 +20,10 @@ Request::Request(const string& line, bool parseLine) {
 }
 
 void Request::parseFromLine(const string& line) {
-    istringstream iss(line);
+    string cleanLine = line;
+    cleanLine.erase(std::remove(cleanLine.begin(), cleanLine.end(), '\r'), cleanLine.end());
+    
+    istringstream iss(cleanLine);
     iss >> command;
     
     string arg;
