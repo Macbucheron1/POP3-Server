@@ -12,6 +12,8 @@ class RequestUnknown : public Request {
         
     public:
         RequestUnknown(const string& cmd);
+        RequestUnknown(istream& stream);
+        RequestUnknown(const string& line, bool parseLine);
         string getRawCommand() const;
         void accept(Server& server) override;
 };

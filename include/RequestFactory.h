@@ -4,12 +4,13 @@
 #include "Request.h"
 #include <string>
 #include <memory>
+#include <iostream>
 
 using namespace std;
 
 class RequestFactory {
 public:
-    static unique_ptr<Request> parse(const string& line);
+    static unique_ptr<Request> parse(istream& stream);
 };
 
 #endif

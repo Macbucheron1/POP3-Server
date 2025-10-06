@@ -47,12 +47,14 @@ void Server::start()
 		// On passe à l'état suivant de la communication.
 		m_currentState = State::TALKING_TO_USER;
 
-		// On lit une ligne par une ligne tant qu'on peut.
+		// On traite les requêtes tant qu'on peut lire depuis le flux.
 		while (m_stream && m_currentState != State::QUITTING) {
-			std::string line;
-			std::getline(m_stream, line);
+			auto request = RequestFactory::parse(m_stream);
 			
-			auto request = RequestFactory::parse(line); 
+			// Vérifier si on a pu parser une requête
+			if (!request) {
+				break;
+			}
 
 			// TODO : utiliser le pattern visitor pour déléguer
 			if (request->getCommand() == "QUIT") {
