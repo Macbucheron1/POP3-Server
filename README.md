@@ -1,4 +1,4 @@
-# TP2_CPP_CS_3A
+# POP3 Server in C++
 
 ## Use the project 
 
