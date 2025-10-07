@@ -2,9 +2,15 @@
 
 ## Use the project 
 
+Start by getting the binary & make it executable - Linux Only:
+```bash
+wget https://github.com/Macbucheron1/POP3-Server/releases/download/1.0.0/pop3-server
+chmod +x pop3-server
+```
+
 ### Quick start - CLI
 
-1. Launch the binary (make sur it is executable)
+1. Launch the binary 
 ```bash
 ./pop3-server
 ```
