@@ -28,7 +28,9 @@ nc localhost 9999
 
 3. New you will need to setup the email address copy the same value as the screenshot.
 ![setup_account1](./img/setup_account1.png)
+After filling the value, click on `Configure manually`
 ![setup_account2](./img/setup_account2.png)
+After filling the value, click on `Advanced config`
 ![setup_account3](./img/setup_account3.png)
 
 4. You now should have your account setup when you click back on Local Folders. Try to click on `Get Messages` to fetch messages from the server. 
